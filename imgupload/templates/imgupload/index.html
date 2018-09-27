@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block title %}图片上传{% endblock %}
+
+{% block content %}
+    <form id="uploadForm"  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="imgFile"><br>
+        <input type="submit" value="提交"/>
+
+    </form>
+    {#    <button style="background-color:#00FF00;font-size: 60px;margin:10px 5px;" class="button button-big button-fill"#}
+    {#            id="fileSelect">点击上传图片#}
+    {#    </button>#}
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block title %}共享文本{% endblock %}
+
+{% block content %}
+    <p>当前页面链接：{{ request.method }}{{ request.path }}</p><br><br>
+    <a href="{% url 'add' 44 55 %}">计算</a>
+    {{ string }}<br><br>
+    这里是首页，欢迎光临<br><br>
+    教程列表：
+    {% for tutorial in tutorial_list %}
+        {{ tutorial }}
+    {% endfor %}<br><br>
+    {% for key, value in info_dict.items %}
+        {{ key }}: {{ value }}
+    {% endfor %}<br><br>
+    站点：{{ info_dict.site }} 内容：{{ info_dict.content }}<br><br>
+    {% for i in int_list %}
+        {{ i }}{% if not forloop.last %},{% endif %}
+    {% endfor %}<br><br>
+    <ul>
+        {% for athlete in athlete_list %}
+            <li>{{ athlete.name }}</li>
+        {% empty %}
+            <li>抱歉，列表为空</li>
+        {% endfor %}
+    </ul><br><br>
+
+{% endblock %}
+
+

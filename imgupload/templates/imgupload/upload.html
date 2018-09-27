@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片上传</title>
+</head>
+<body>
+<h1>图片上传</h1>
+<!--<button type="button">上传图片</button>-->
+<form id="uploadForm" name="uploadForm" method="post" enctype="multipart/form-data">
+    <input type="file" id="imgFile" name="imgFile" accept="image/*" style="opacity:0" onchange="handleFiles(this.files)"
+           multiple>
+</form>
+
+
+<button style="background-color:#00FF00;font-size: 60px;margin:10px 5px;" class="button button-big button-fill"
+        id="fileSelect">点击上传图片
+</button>
+
+<div class="imglist"></div>
+<p></p>
+</body>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $.getJSON('imgupload.php', function (result) {
+      $.each(result.data, function (i, val) {
+        $("div").append("<a href='" + val + "'>" + "<img src='" + val + "'hspace='5' width='60%'/>" + "</a><br>");
+      });
+    });
+  });
+  var fileSelect = document.getElementById('fileSelect');
+  var fileElems = document.getElementById('imgFile');
+  var form = document.getElementById('uploadForm');
+
+  fileSelect.addEventListener('click', function (e) {
+    if (fileElems) {
+      fileElems.click();
+    }
+    ;
+    e.preventDefault;
+  }, false);
+
+  fileElems.addEventListener('change', handleFiles, false);
+
+  function handleFiles() {
+    var fileList = this.files;
+    for (var i = 0; i < fileList.length; i++) {
+      if (fileList[i].size < 8000000) {
+        sendFile(fileList[i]);
+      } else {
+        alert('文件大于8M，无法上传');
+      }
+      ;
+    }
+    ;
+  }
+
+  function uploadPic() {
+      formData = new FormData(form);
+    $.ajax({
+      url: 'img/',
+      type: 'post',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (res) {
+        if (res) {
+          alert('上传成功！');
+        }
+        console.log(res);
+        $('#pic').val('');
+        $('.showUrl').html(res);
+        $('.showPic').attr('src', res);
+      },
+      error: function (err) {
+        alert('网络连接失败,稍后重试', err);
+      }
+
+    });
+
+  }
+
+  function sendFile(file) {
+    var xhr = new XMLHttpRequest();
+    var formData = new FormData();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        var response = JSON.parse(xhr.responseText);
+        var imgUrl = response.data;
+        $('div').prepend('<a href=\'' + imgUrl + '\'>' + '<img src=\'' + imgUrl + '\'hspace=\'5\' width=\'60%\'/>' + '</a><br>');
+        //alert(xhr.responseText);
+      }
+      ;
+    };
+    formData.append('imgFile', file);
+    xhr.open('POST', 'imgupload.php', true);
+    //xhr.withCredentials = true;
+    xhr.send(formData);
+  }
+</script>
+</html>
