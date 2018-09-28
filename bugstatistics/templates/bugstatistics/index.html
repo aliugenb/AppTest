@@ -25,18 +25,19 @@
 <div class="page-header" style="padding-top: 20px;">
     <div id="navbar" class="navbar-collapse collapse">
         {#        <input id="new-bug" name="name" type="button" value="新建" class="form-control"#}
-        {#               style="width:50px;height:30px" onclick="document.getElementById('id01').style.display='block'">#}
-        <button class="new-bug" onclick="document.getElementById('id01').style.display='block'"
+        {#               style="width:50px;height:30px" onclick="document.getElementById('from-submit').style.display='block'">#}
+        <button class="new-bug" onclick="document.getElementById('from-submit').style.display='block'"
                 style="width:auto; height: 40px">新建
         </button>
     </div>
 </div>
 
-<div id="id01" class="modal">
+<div id="from-submit" class="modal">
 
     <form class="modal-content animate" action="/bugstatistics/add_bug" METHOD="POST">
         <div class="imgcontainer">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <span onclick="document.getElementById('from-submit').style.display='none'" class="close"
+                  title="Close Modal">&times;</span>
             {#            <img src="https://static.runoob.com/images/mix/img_avatar.png" alt="Avatar" class="avatar">#}
         </div>
 
@@ -54,20 +55,28 @@
             <input id="status" type="text" placeholder="状态" name="status" required><br>
 
             <button type="submit" class="savebtn">保存</button>
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
-                Cancel
+            <button type="button" onclick="document.getElementById('from-submit').style.display='none'"
+                    class="cancelbtn">
+                取消
             </button>
         </div>
     </form>
 </div>
 <script>
-    {#var modal = document.getElementById('id01');#}
-    {#window.onclick = function (event) {#}
-    {#    if (event.target == modal) {#}
-    {#        modal.style.display = "none";#}
-    {#    }#}
-    {
-    #}#}
+    $("#from-submit").submit(function () {
+        $.ajax({
+            type: "POST",
+            url: '/bugstatistics/add_bug',
+            success: function () {
+                window.opener.location.reload();
+                window.close();
+
+            },
+            error: function () {
+
+            }
+        })
+    })
 
 </script>
 <!--列表分页器-->
