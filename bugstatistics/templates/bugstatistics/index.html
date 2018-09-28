@@ -6,8 +6,11 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     <title>Bug Statistics</title>
-    <link rel="icon" type="static/" href="bug.ico" />
+    <link rel="icon" type="static/" href="static/bug.ico"/>
+
 </head>
+
+
 <body role="document">
 <!--导航栏-->
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -19,10 +22,13 @@
 </nav>
 <div class="page-header" style="padding-top: 20px;">
     <div id="navbar" class="navbar-collapse collapse">
-        <input name="name" type="button" value="新建" class="form-control"
-               style="width:50px;height:30px" onclick="location='add_bug'">
+        <input id="new-bug" name="name" type="button" value="新建" class="form-control"
+               style="width:50px;height:30px" onclick=location="add_bug">
     </div>
 </div>
+<script>
+
+</script>
 <!--列表分页器-->
 {#    <div class="paginator">#}
 {#        <span class="step-links">#}
