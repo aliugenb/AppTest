@@ -8,7 +8,7 @@
     {% load staticfiles %}
     <title>Bug Statistics</title>
     <link rel="icon" type="image/x-icon" href="{% static "bugstatistics/imgs/bug.ico" %}"/>
-    <link rel="stylesheet" type="text/css" href="{%static "bugstatistics/css/addBug.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "bugstatistics/css/addBug.css" %}">
 
 </head>
 
@@ -24,8 +24,10 @@
 </nav>
 <div class="page-header" style="padding-top: 20px;">
     <div id="navbar" class="navbar-collapse collapse">
-        <input id="new-bug" name="name" type="button" value="新建" class="form-control"
-               style="width:50px;height:30px" onclick="document.getElementById('id01').style.display='block'">
+        {#        <input id="new-bug" name="name" type="button" value="新建" class="form-control"#}
+        {#               style="width:50px;height:30px" onclick="document.getElementById('id01').style.display='block'">#}
+        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto; height: 40px">新建
+        </button>
     </div>
 </div>
 
