@@ -5,8 +5,10 @@
     {% load bootstrap3 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    {% load staticfiles %}
     <title>Bug Statistics</title>
-    <link rel="icon" type="static/" href="static/bug.ico"/>
+    <link rel="icon" type="image/x-icon" href="{% static "bugstatistics/imgs/bug.ico" %}"/>
+    <link rel="stylesheet" type="text/css" href="{%static "bugstatistics/css/addBug.css" %}">
 
 </head>
 
@@ -23,10 +25,39 @@
 <div class="page-header" style="padding-top: 20px;">
     <div id="navbar" class="navbar-collapse collapse">
         <input id="new-bug" name="name" type="button" value="新建" class="form-control"
-               style="width:50px;height:30px" onclick=location="add_bug">
+               style="width:50px;height:30px" onclick="document.getElementById('id01').style.display='block'">
     </div>
 </div>
+
+<div id="id01" class="modal">
+
+    <form class="modal-content animate" action="/action_page.php">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <img src="https://static.runoob.com/images/mix/img_avatar.png" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="container">
+            <label><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+
+            <button type="submit">登陆</button>
+            <input type="checkbox" checked="checked"> 记住我
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
+                Cancel
+            </button>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+    </form>
+</div>
 <script>
+
 
 </script>
 <!--列表分页器-->
@@ -76,3 +107,19 @@
 </div>
 </body>
 </html>
+
+
+{#<h2>登录表单</h2>#}
+{##}
+{#<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">登录</button>#}
+{##}
+{##}
+{#// 获取模型#}
+{#var modal = document.getElementById('id01');#}
+{##}
+{#// 鼠标点击模型外区域关闭登录框#}
+{#window.onclick = function(event) {#}
+{#if (event.target == modal) {#}
+{#modal.style.display = "none";#}
+{#}#}
+{#}#}
