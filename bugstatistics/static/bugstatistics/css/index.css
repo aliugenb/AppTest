@@ -1,0 +1,37 @@
+/* Table Head */
+/*.row{*/
+    /*width: 100%;*/
+/*}*/
+.row thead th {
+    background-color: blue;
+    color: #fff;
+    width: 50%;
+    border-bottom-width: 0;
+}
+
+/* Column Style */
+.row td {
+    color: red;
+}
+
+/* Heading and Column Style */
+.row tr {
+    width: 50%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: orange;
+}
+
+.row th {
+    border-width: 1px;
+    border-style: solid;
+    border-color: yellow;
+}
+
+/* Padding and font style */
+.row td, .row th {
+    padding: 5px 10px;
+    font-size: 12px;
+    font-family: Verdana;
+    font-weight: bold;
+}
