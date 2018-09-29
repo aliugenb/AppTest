@@ -6,7 +6,7 @@ from bugstatistics.models import BUG
 
 
 def bugstatistics(request):
-    bug_list = BUG.objects.all()
+    bug_list = BUG.objects.all().order_by('-id')
     return render(request, 'bugstatistics/index.html', {'bugs': bug_list})
 
 

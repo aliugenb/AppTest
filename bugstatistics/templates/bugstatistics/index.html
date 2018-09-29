@@ -34,8 +34,9 @@
 
 <div id="add-bug" class="modal">
 
-    {#    <form class="modal-content animate" action="/bugstatistics/add_bug" METHOD="POST">#}
+    {#        <form class="modal-content animate" action="/bugstatistics/add_bug" METHOD="POST">#}
     <form class="modal-content animate" id="from-submit">
+        {{ form }}
         <div class="imgcontainer">
             <span onclick="document.getElementById('add-bug').style.display='none'" class="close"
                   title="Close Modal">&times;</span>
@@ -55,7 +56,7 @@
             <label><b>状态</b></label><br>
             <input id="status" type="text" placeholder="状态" name="status" required><br>
 
-            <button type="submit" class="savebtn" onclick="upload()">保存</button>
+            <button type="button" class="savebtn" onclick="upload()">保存</button>
 
             <button type="button" onclick="document.getElementById('add-bug').style.display='none'"
                     class="cancelbtn">
@@ -64,24 +65,25 @@
         </div>
     </form>
 </div>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
     function upload() {
-        var form = document.getElementById("from-submit");
-        formData = new FormData(form);
         $.ajax({
-            url: '/bugstatistics/add_bug/',
+            url: '/bugstatistics/add_bug',
+            async: false,
             type: 'POST',
-            data: formData.serialize(),
+            data: $("#from-submit").serialize(),
             success: function () {
-                window.opener.location.reload();
-                window.close();
-
+                document.getElementById('add-bug').style.display='none';
+                window.location.reload();
+                console.log("success")
             },
             error: function (err) {
                 alert('网络连接失败,稍后重试', err);
             }
         })
     }
+
 
 </script>
 <!--列表分页器-->
