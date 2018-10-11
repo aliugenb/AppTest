@@ -99,6 +99,10 @@
 {#    </div>#}
 <style>
 
+    table {
+        table-layout: fixed;
+    }
+
     td {
         white-space: nowrap;
         overflow: hidden;
@@ -110,30 +114,30 @@
 <!--内容表格-->
 <div class="row" style="padding-top: 0px;">
     <div class="container-fluid">
-        <table class="table table-bordered table-hover ">
-            <thead>
-            <tr class="table-dark">
-                <th scope="col">id</th>
-                <th scope="col">标题</th>
-                <th scope="col">需求</th>
-                <th scope="col">版本</th>
-                <th scope="col">状态</th>
-                <th scope="col">创建时间</th>
-                <th scope="col">关闭时间</th>
-                <th scope="col">操作</th>
+        <table class="table table-bordered table-responsive table-hover ">
+            <thead class="w-100">
+            <tr class="row table-dark">
+                <th scope="col" class="col-md-1 text-center">id</th>
+                <th scope="col" class="col-md-4 text-center">标题</th>
+                <th scope="col" class="col-md-1 text-center">需求</th>
+                <th scope="col" class="col-md-1 text-center">版本</th>
+                <th scope="col" class="col-md-1 text-center">状态</th>
+                <th scope="col" class="col-md-1 text-center">创建时间</th>
+                <th scope="col" class="col-md-1 text-center">关闭时间</th>
+                <th scope="col" class="col-md-2 text-center">操作</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="w-100">
             {% for bug in bugs %}
-                <tr scope="row">
-                    <td>{{ bug.id }}</td>
-                    <td>{{ bug.title }}</td>
-                    <td>{{ bug.iteration }}</td>
-                    <td>{{ bug.version }}</td>
-                    <td class="success">{{ bug.status }}</td>
-                    <td>{{ bug.create_time |date:"Y-m-d H:i:s" }}</td>
-                    <td>{{ bug.end_time |date:"Y-m-d H:i:s" }}</td>
-                    <td>
+                <tr class="row">
+                    <td class="col-md-1 text-center">{{ bug.id }}</td>
+                    <td class="col-md-4" title="2222">{{ bug.title }}</td>
+                    <td class="col-md-1">{{ bug.iteration }}</td>
+                    <td class="col-md-1">{{ bug.version }}</td>
+                    <td class="success col-md-1">{{ bug.status }}</td>
+                    <td class="col-md-1">{{ bug.create_time |date:"Y-m-d H:i:s" }}</td>
+                    <td class="col-md-1">{{ bug.end_time |date:"Y-m-d H:i:s" }}</td>
+                    <td class="col-md-2 text-center">
                         <button>编辑</button>
                         <button>删除</button>
                     </td>
