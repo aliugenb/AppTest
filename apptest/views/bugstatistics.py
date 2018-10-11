@@ -6,14 +6,14 @@ from bugstatistics.models import BUG
 
 
 def bugstatistics(request):
-    bug_list = BUG.objects.all()
+    bug_list = BUG.objects.all().order_by('-id')
     return render(request, 'bugstatistics/index.html', {'bugs': bug_list})
 
 
 @csrf_exempt
 def add_bug(request):
     post_response = {'ret': 1, 'msg': 'post success!!'}
-    get_response = {'error': '使用post请求!!'}
+    get_response = {'ret': 0, 'msg': 'error!使用post请求!!'}
     if request.method == 'POST':
         title = request.POST.get('title')
         print(title)

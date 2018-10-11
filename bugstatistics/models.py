@@ -12,4 +12,4 @@ class BUG(models.Model):
     version = models.CharField('版本', max_length=30)
     status = models.CharField('状态', max_length=30, choices=STATUS_OPTIONS)
     create_time = models.DateTimeField('创建时间', default=timezone.now)
-    end_time = models.DateTimeField('关闭时间', auto_now=True)
+    end_time = models.DateTimeField('关闭时间', blank=True, null=True)

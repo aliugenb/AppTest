@@ -8,34 +8,51 @@
     {% load staticfiles %}
     <title>Bug Statistics</title>
     <link rel="icon" type="image/x-icon" href="{% static "bugstatistics/imgs/bug.ico" %}"/>
+    {#    <link rel="stylesheet" type="text/css" href="{% static "bugstatistics/css/index.css" %}">#}
     <link rel="stylesheet" type="text/css" href="{% static "bugstatistics/css/addBug.css" %}">
 
 </head>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function upload() {
+        $.ajax({
+            url: '/bugstatistics/add_bug',
+            async: false,
+            type: 'POST',
+            data: $("#from-submit").serialize(),
+            success: function () {
+                document.getElementById('add-bug').style.display = 'none';
+                window.location.reload();
+                console.log("success")
+            },
+            error: function (err) {
+                alert('网络连接失败,稍后重试', err);
+            }
+        })
+    }
 
+</script>
 
 <body role="document">
 <!--导航栏-->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header" style="float: left">
-            <a class="navbar-brand">Bug System</a>
-        </div>
-    </div>
+<nav class="navbar navbar-light navbar-fixed-top" style="background-color: powderblue">
+    <a class="navbar-brand" style="color: black">
+        <img src="{% static "bugstatistics/imgs/bug.ico" %}" width="30" height="30" class="d-inline-block align-top"
+             alt="">
+        Bug Statistics</a>
+    <button class="new-bug" onclick="document.getElementById('add-bug').style.display='block'"
+            style="width:auto; height: 40px">新建
+    </button>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 </nav>
-<div class="page-header" style="padding-top: 20px;">
-    <div id="navbar" class="navbar-collapse collapse">
-        {#        <input id="new-bug" name="name" type="button" value="新建" class="form-control"#}
-        {#               style="width:50px;height:30px" onclick="document.getElementById('from-submit').style.display='block'">#}
-        <button class="new-bug" onclick="document.getElementById('add-bug').style.display='block'"
-                style="width:auto; height: 40px">新建
-        </button>
-    </div>
-</div>
 
+<!--新建bug-->
 <div id="add-bug" class="modal">
-
-    {#    <form class="modal-content animate" action="/bugstatistics/add_bug" METHOD="POST">#}
     <form class="modal-content animate" id="from-submit">
+        {{ form }}
         <div class="imgcontainer">
             <span onclick="document.getElementById('add-bug').style.display='none'" class="close"
                   title="Close Modal">&times;</span>
@@ -55,7 +72,7 @@
             <label><b>状态</b></label><br>
             <input id="status" type="text" placeholder="状态" name="status" required><br>
 
-            <button type="submit" class="savebtn" onclick="upload()">保存</button>
+            <button type="button" class="savebtn" onclick="upload()">保存</button>
 
             <button type="button" onclick="document.getElementById('add-bug').style.display='none'"
                     class="cancelbtn">
@@ -63,27 +80,9 @@
             </button>
         </div>
     </form>
+
 </div>
-<script>
-    function upload() {
-        var form = document.getElementById("from-submit");
-        formData = new FormData(form);
-        $.ajax({
-            url: '/bugstatistics/add_bug/',
-            type: 'POST',
-            data: formData.serialize(),
-            success: function () {
-                window.opener.location.reload();
-                window.close();
 
-            },
-            error: function (err) {
-                alert('网络连接失败,稍后重试', err);
-            }
-        })
-    }
-
-</script>
 <!--列表分页器-->
 {#    <div class="paginator">#}
 {#        <span class="step-links">#}
@@ -98,31 +97,46 @@
 {#            {% endif %}#}
 {#        </span>#}
 {#    </div>#}
-<!--嘉宾列表-->
+<style>
+
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+</style>
+
+<!--内容表格-->
 <div class="row" style="padding-top: 0px;">
-    <div class="col-md-6">
-        <table class="table table-striped">
+    <div class="container-fluid">
+        <table class="table table-bordered table-hover ">
             <thead>
-            <tr>
-                <th>id</th>
-                <th>标题</th>
-                <th>需求</th>
-                <th>版本</th>
-                <th>状态</th>
-                <th>创建时间</th>
-                <th>关闭时间</th>
+            <tr class="table-dark">
+                <th scope="col">id</th>
+                <th scope="col">标题</th>
+                <th scope="col">需求</th>
+                <th scope="col">版本</th>
+                <th scope="col">状态</th>
+                <th scope="col">创建时间</th>
+                <th scope="col">关闭时间</th>
+                <th scope="col">操作</th>
             </tr>
             </thead>
             <tbody>
             {% for bug in bugs %}
-                <tr>
+                <tr scope="row">
                     <td>{{ bug.id }}</td>
                     <td>{{ bug.title }}</td>
                     <td>{{ bug.iteration }}</td>
                     <td>{{ bug.version }}</td>
-                    <td>{{ bug.status }}</td>
-                    <td>{{ bug.create_time }}</td>
-                    <td>{{ bug.end_time }}</td>
+                    <td class="success">{{ bug.status }}</td>
+                    <td>{{ bug.create_time |date:"Y-m-d H:i:s" }}</td>
+                    <td>{{ bug.end_time |date:"Y-m-d H:i:s" }}</td>
+                    <td>
+                        <button>编辑</button>
+                        <button>删除</button>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
