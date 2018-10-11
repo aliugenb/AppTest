@@ -8,7 +8,7 @@
     {% load staticfiles %}
     <title>Bug Statistics</title>
     <link rel="icon" type="image/x-icon" href="{% static "bugstatistics/imgs/bug.ico" %}"/>
-{#    <link rel="stylesheet" type="text/css" href="{% static "bugstatistics/css/index.css" %}">#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static "bugstatistics/css/index.css" %}">#}
     <link rel="stylesheet" type="text/css" href="{% static "bugstatistics/css/addBug.css" %}">
 
 </head>
@@ -31,7 +31,6 @@
         })
     }
 
-
 </script>
 
 <body role="document">
@@ -50,8 +49,8 @@
     </form>
 </nav>
 
+<!--新建bug-->
 <div id="add-bug" class="modal">
-
     <form class="modal-content animate" id="from-submit">
         {{ form }}
         <div class="imgcontainer">
@@ -107,31 +106,37 @@
 
     }
 </style>
+
+<!--内容表格-->
 <div class="row" style="padding-top: 0px;">
-    <div class="col-md-6">
-{#        <table class="table table-striped" style="width: 80%; table-layout:fixed;">#}
+    <div class="container-fluid">
         <table class="table table-bordered table-hover ">
             <thead>
             <tr class="table-dark">
                 <th scope="col">id</th>
-                <th scope="col" width="60%">标题</th>
+                <th scope="col">标题</th>
                 <th scope="col">需求</th>
                 <th scope="col">版本</th>
                 <th scope="col">状态</th>
                 <th scope="col">创建时间</th>
                 <th scope="col">关闭时间</th>
+                <th scope="col">操作</th>
             </tr>
             </thead>
             <tbody>
             {% for bug in bugs %}
                 <tr scope="row">
-                    <td class="active">{{ bug.id }}</td>
+                    <td>{{ bug.id }}</td>
                     <td>{{ bug.title }}</td>
                     <td>{{ bug.iteration }}</td>
                     <td>{{ bug.version }}</td>
                     <td class="success">{{ bug.status }}</td>
-                    <td>{{ bug.create_time }}</td>
-                    <td>{{ bug.end_time }}</td>
+                    <td>{{ bug.create_time |date:"Y-m-d H:i:s" }}</td>
+                    <td>{{ bug.end_time |date:"Y-m-d H:i:s" }}</td>
+                    <td>
+                        <button>编辑</button>
+                        <button>删除</button>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
